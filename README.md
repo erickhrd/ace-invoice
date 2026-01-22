@@ -88,7 +88,31 @@ On command-line you can test a protected endpoint using:
 ```
 curl -H "x-api-key: your_custom_api_key" http://localhost:3000/api/customer/viewall
 ```
-Or you can test it using Postman by adding the x-api-key and value inside the **Headers** tab with a **GET** request in this case.
+Or you can test it using Postman by adding the **x-api-key** and value inside the **Headers** tab with a **GET** request in this case.
+
+### 6. Test POST request
+If Postman was installed you can test the POST request by entering this endpoint:
+```
+http://localhost:3000/api/order/new
+```
+And adding the **x-api-key** and value inside the **Headers** tab as well as **Content-Type** with **application/json** value. Here's an example that can be inserted in the body of the request:
+```
+{
+  "invoiceData": {
+    "customerId": "29B1115C-368D-4821-8429-C27F4AD285E0"
+  },
+  "products": [
+    {
+      "productId": "A9A875E0-97DD-4431-840E-BAE05985A976",
+      "quantity": 4
+    },
+    {
+      "productId": "44692190-B1CB-4980-A3D9-2B24AEB3D2CA",
+      "quantity": 2
+    }
+  ]
+}
+```
 
 ## Assumptions & Design Decisions
 
