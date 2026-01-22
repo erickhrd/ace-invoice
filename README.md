@@ -26,7 +26,7 @@ This project uses **Azure SQL Database**.
 1. Go to the [Azure Portal](https://portal.azure.com).
 2. Sign in with your database credentials.
 3. Search for **Azure SQL server**.
-4. Click **Create** of you do not have a database yet and give the database a name (e.g., `AceInvoice`).
+4. Click **Create** if you do not have a database yet and give the database a name (e.g., `AceInvoice`).
 
 ### 2. Open Query Editor in Azure SQL
 
@@ -97,6 +97,9 @@ Or you can test it using Postman by adding the x-api-key and value inside the **
 - **Primary keys** use `UNIQUEIDENTIFIER` (UUID) to allow scalability and prevent sequential ID conflicts.
 - Product costs are stored as `DECIMAL(10,2)` to ensure at least two decimal places for currency values.
 
+![Database Diagram](./db-diagram.png)
+
+
 ### API Design
 - Follows **REST principles**:
   - `GET` endpoints for reading data
@@ -111,7 +114,7 @@ Or you can test it using Postman by adding the x-api-key and value inside the **
   - `401` – missing or invalid API key
   - `404` – resource not found
   - `500` – unexpected server errors
-- All database operations are wrapped in **try/catch blocks**, and **transactions** are used for order creation to ensure atomicity.
+- All database operations are wrapped in **try/catch** blocks. Order creation uses an explicit database **transaction** (BEGIN → COMMIT → ROLLBACK) to ensure atomicity, meaning an order and its line items are either fully created together or fully rolled back if any step fails.
 
 ### Order & Invoice Handling
 - Orders automatically get the **current date/time** as the invoice date using `GETDATE()` in SQL, instead of relying on client input.
